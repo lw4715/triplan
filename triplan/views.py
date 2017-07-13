@@ -16,7 +16,7 @@ class ItineraryDetail(generic.DetailView):
 class ItineraryEdit(generic.edit.UpdateView):
     template_name = 'triplan/itinerary_edit.html'
     model = ItinerarySegment
-    fields = ["location", "duration", "description"]
+    fields = ["location", "duration", "description", "photo"]
 
     def get_success_url(self):
         return reverse_lazy('triplan:itinerary_detail', args=[self.kwargs['itinerary_pk']])
@@ -36,14 +36,17 @@ class ItineraryCreate(generic.edit.CreateView):
 class ItinerarySegmentCreate(generic.edit.CreateView):
     pass
     model = ItinerarySegment
-    fields = ["location", "duration", "description"]
+    fields = ["location", "duration", "description", "photo"]
 
     def get_context_data(self, **kwargs):
         context = super(ItinerarySegmentCreate, self).get_context_data(**kwargs)
-        context['itinerary'] = Itinerary.objects.get(self.kwargs['pk'])
+        context['itinerary'] = Itinerary.objects.get(id=self.kwargs['pk'])
         return context
 
     def form_valid(self, form):
-        form.instance.itinerary = Itinerary.objects.get(self.kwargs['pk'])
+        form.instance.itinerary = Itinerary.objects.get(id=self.kwargs['pk'])
         form.instance.save()
         return super(ItinerarySegmentCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('triplan:itinerary_detail', args=[self.kwargs['pk']])

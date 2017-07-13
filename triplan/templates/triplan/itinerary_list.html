@@ -19,10 +19,7 @@
         <a href="{% url 'triplan:itinerary_detail' itinerary.id %}">
             <div class="itinerary-preview margin-5">
                 {% if itinerary.preview_photo %}
-                {% block content %}
-                <img src="{{ itinerary.preview_photo.url }}"
-                     class="img img-responsive full-width">
-                {% endblock content %}
+                <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
                 {% else %}
                 <img src="http://misshighpoint.com/uploads/6/3/2/1/63216997/square-placeholder_1_orig.jpg"
                      class="img img-responsive full-width">

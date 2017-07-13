@@ -1,17 +1,28 @@
 {% extends "triplan/base.html" %}
 {% block body %}
 {% load humanize %}
+
 <h2>{{ itinerary.title }}</h2>
 <small>added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
+
+{% if itinerary.preview_photo %}
+<img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
+{% endif %}
+
 <ul>
 {% for segment in itinerary.itinerarysegment_set.all %}
     <div class="panel-body">
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <p>Location: {{ segment.location }}</p>
             <p>Duration: {{ segment.duration }}h</p>
             <p>Description: {{ segment.description }}</p>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
+            {% if segment.photo %}
+            <img src="{{ segment.photo.url }}" class="img img-responsive full-width">
+            {% endif %}
+        </div>
+        <div class="col-sm-2">
         {% if itinerary.owner_id == request.user.id %}
             <a href="{% url 'triplan:itinerary_edit' itinerary.id segment.id %}"
                class="btn btn-info pull-right">Edit</a>
@@ -21,8 +32,10 @@
 
 {% endfor %}
 </ul>
+
 <div class="col-sm-12">
     <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
     <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-success">Add New Segment</a>
 </div>
+
 {% endblock body %}

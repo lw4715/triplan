@@ -29,6 +29,7 @@ class ItinerarySegment(models.Model):
     location = models.CharField(max_length=200)
     duration = models.PositiveIntegerField()
     description = models.CharField(max_length=400)
+    photo = models.ImageField(blank=True)
 
     def __str__(self):
         return self.itinerary.__str__() + self.description.__str__()
