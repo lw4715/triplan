@@ -1,18 +1,32 @@
 {% extends "triplan/base.html" %}
+
+{% block imports %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}">
+{% endblock imports %}
+
 {% block body %}
 {% load humanize %}
-<h1> Hello world, {{ request.user.username }}.</h1>
-<a href="{% url 'triplan:itinerary_create' %}" class="btn btn-success pull-right">Create new itinerary</a>
-<ul>
+
+<div class="col-sm-12 margin-5">
+    <h1> Hello world, {{ request.user.username }}.</h1>
+    <a href="{% url 'triplan:itinerary_create' %}" class="btn btn-success pull-right">Create new itinerary</a>
+</div>
+
+<div class="col-sm-12">
     {% for itinerary in itinerary_list %}
-    <div class="col-sm-12">
-        <a href="{% url 'triplan:itinerary_detail' itinerary.id %}" class="btn btn-default">
-            <strong>{{ itinerary.title }} </strong> &nbsp;
-            <span class="pull-right">
-            added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}
-            </span>
+    <div class="col-sm-4">
+        <a href="{% url 'triplan:itinerary_detail' itinerary.id %}">
+            <div class="itinerary-preview">
+                <img src="http://misshighpoint.com/uploads/6/3/2/1/63216997/square-placeholder_1_orig.jpg"
+                     class="img img-responsive full-width">
+                <strong>{{ itinerary.title }} </strong> &nbsp;
+                <span class="pull-right">
+                added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}
+                </span>
+            </div>
         </a>
     </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock body %}
