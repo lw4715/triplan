@@ -18,6 +18,7 @@ class Itinerary(models.Model):
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(Profile, related_name='owner', on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
+    preview_photo = models.ImageField(blank=True)
 
     def __str__(self):
         return self.title

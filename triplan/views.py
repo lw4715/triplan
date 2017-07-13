@@ -24,7 +24,7 @@ class ItineraryEdit(generic.edit.UpdateView):
 
 class ItineraryCreate(generic.edit.CreateView):
     model = Itinerary
-    fields = ["title"]
+    fields = ["title", "preview_photo"]
     success_url = reverse_lazy('triplan:itinerary_list')
 
     def form_valid(self, form):

@@ -17,13 +17,22 @@
     {% for itinerary in itinerary_list %}
     <div class="col-sm-4">
         <a href="{% url 'triplan:itinerary_detail' itinerary.id %}">
-            <div class="itinerary-preview">
+            <div class="itinerary-preview margin-5">
+                {% if itinerary.preview_photo %}
+                {% block content %}
+                <img src="{{ itinerary.preview_photo.url }}"
+                     class="img img-responsive full-width">
+                {% endblock content %}
+                {% else %}
                 <img src="http://misshighpoint.com/uploads/6/3/2/1/63216997/square-placeholder_1_orig.jpg"
                      class="img img-responsive full-width">
-                <strong>{{ itinerary.title }} </strong> &nbsp;
-                <span class="pull-right">
-                added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}
-                </span>
+                {% endif %}
+                <p class="itinerary-desc">
+                    <strong class="itinerary-text">{{ itinerary.title }} </strong> &nbsp; <br/>
+                    <span class="itinerary-text">
+                    added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}
+                    </span>
+                </p>
             </div>
         </a>
     </div>
