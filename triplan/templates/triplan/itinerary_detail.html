@@ -1,0 +1,28 @@
+{% extends "triplan/base.html" %}
+{% block body %}
+{% load humanize %}
+<h2>{{ itinerary.title }}</h2>
+<small>added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
+<ul>
+{% for segment in itinerary.itinerarysegment_set.all %}
+    <div class="panel-body">
+        <div class="col-sm-8">
+            <p>Location: {{ segment.location }}</p>
+            <p>Duration: {{ segment.duration }}h</p>
+            <p>Description: {{ segment.description }}</p>
+        </div>
+        <div class="col-sm-4">
+        {% if itinerary.owner_id == request.user.id %}
+            <a href="{% url 'triplan:itinerary_edit' itinerary.id segment.id %}"
+               class="btn btn-info pull-right">Edit</a>
+        {% endif %}
+        </div>
+    </div>
+
+{% endfor %}
+</ul>
+<div class="col-sm-12">
+    <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
+    <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-default">Add new segment</a>
+</div>
+{% endblock body %}
