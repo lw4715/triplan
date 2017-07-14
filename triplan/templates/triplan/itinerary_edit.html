@@ -3,14 +3,17 @@
 {% load bootstrap3 %}
 
     <h3>Editing <strong>{{ itinerarysegment.location }}</strong></h3>
-
+    {% if itinerarysegment.photo %}
+    <img src="{{ itinerarysegment.photo.url }}">
+    {% endif %}
     <form action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {% bootstrap_form form layout='inline' %}
-        {% bootstrap_form_errors form %}
         <a href="{% url 'triplan:itinerary_detail' itinerarysegment.itinerary.id %}" class="btn btn-default">Back</a>
         <button class="btn btn-success" type="submit">Save</button>
     </form>
+
+    {{ form.media }}
 
 {% endblock body %}
 

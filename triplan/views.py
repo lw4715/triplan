@@ -1,3 +1,5 @@
+from datetimewidget.widgets import DateTimeWidget
+from django import forms
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -16,7 +18,11 @@ class ItineraryDetail(generic.DetailView):
 class ItineraryEdit(generic.edit.UpdateView):
     template_name = 'triplan/itinerary_edit.html'
     model = ItinerarySegment
-    fields = ["location", "duration", "description", "photo"]
+    fields = ["photo", "location", "duration", "description", "start_time", "end_time"]
+    widgets = {
+        "start_time": forms.TimeInput(format='%H:%M %p'),
+        "end_time": DateTimeWidget(usel10n=True, bootstrap_version=3)
+    }
 
     def get_success_url(self):
         return reverse_lazy('triplan:itinerary_detail', args=[self.kwargs['itinerary_pk']])
@@ -36,7 +42,11 @@ class ItineraryCreate(generic.edit.CreateView):
 class ItinerarySegmentCreate(generic.edit.CreateView):
     pass
     model = ItinerarySegment
-    fields = ["location", "duration", "description", "photo"]
+    fields = ["photo", "location", "duration", "description", "start_time", "end_time"]
+    widgets = {
+        "start_time": DateTimeWidget(usel10n=True, bootstrap_version=3),
+        "end_time": DateTimeWidget(usel10n=True, bootstrap_version=3)
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ItinerarySegmentCreate, self).get_context_data(**kwargs)

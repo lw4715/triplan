@@ -28,6 +28,8 @@ class ItinerarySegment(models.Model):
     itinerary = models.ForeignKey(Itinerary)
     location = models.CharField(max_length=200)
     duration = models.PositiveIntegerField()
+    start_time = models.TimeField(default="12:00 PM")
+    end_time = models.TimeField(default="1:00 PM")
     description = models.CharField(max_length=400)
     photo = models.ImageField(blank=True)
 
