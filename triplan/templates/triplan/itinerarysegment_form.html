@@ -1,14 +1,31 @@
 {% extends 'triplan/base.html' %}
+{% block imports %}
+    {% load static %}
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'maps.css' %}">
+    <script src="{% static 'maps_autocomplete_search.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8&libraries=places&callback=initAutocomplete"
+     async defer></script>
+{% endblock imports %}
+
 {% block body %}
 {% load bootstrap3 %}
 
-    <h3>Adding new segment in <strong>{{ itinerary.title }}</strong></h3>
+    <div class="col-sm-12 col-sm-offset-2">
+        <h3>Adding new segment in <strong>{{ itinerary.title }}</strong></h3>
+    </div>
+    <div class="col-sm-4 col-sm-offset-2">
+        <form action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form layout='inline' %}
+            <a href="{% url 'triplan:itinerary_detail' itinerary.id %}" class="btn btn-default">Back</a>
+            <button class="btn btn-success" type="submit" value="save">Save</button>
+        </form>
+    </div>
 
-    <form action="" enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        {% bootstrap_form form layout='inline' %}
-        <a href="{% url 'triplan:itinerary_detail' itinerary.id %}" class="btn btn-default">Back</a>
-        <button class="btn btn-success" type="submit" value="save">Save</button>
-    </form>
+    <input id="pac-input" class="controls" type="text" placeholder="Where would you like to visit?">
+    <div id="map" class="col-sm-4"></div>
+
+</div>
 
 {% endblock body %}

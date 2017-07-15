@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <title>Triplan</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}">
 
     {% block imports %}
     {% endblock imports %}
@@ -15,9 +18,7 @@
 
 </head>
 <body>
-    <div class="panel col-sm-8 col-sm-offset-2">
-        {% block body %}
-        {% endblock body %}
-    </div>
+    {% block body %}
+    {% endblock body %}
 </body>
 </html>

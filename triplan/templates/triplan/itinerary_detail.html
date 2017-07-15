@@ -2,42 +2,44 @@
 {% block body %}
 {% load humanize %}
 
-<h2>{{ itinerary.title }}</h2>
-<small>added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
+<div class="panel col-sm-8 col-sm-offset-2">
 
-{% if itinerary.preview_photo %}
-<img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
-{% endif %}
+    <h2>{{ itinerary.title }}</h2>
+    <small>added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
 
-<ul>
-{% for segment in itinerary.itinerarysegment_set.all %}
-    <div class="panel-body">
-        <div class="col-sm-4">
-            <p>Location: {{ segment.location }}</p>
-            <p>Duration: {{ segment.duration }}h</p>
-            <p>From: {{ segment.start_time }}</p>
-            <p>To: {{ segment.end_time }}</p>
-            <p>Description: {{ segment.description }}</p>
-        </div>
-        <div class="col-sm-6">
-            {% if segment.photo %}
-            <img src="{{ segment.photo.url }}" class="img img-responsive full-width">
+    {% if itinerary.preview_photo %}
+    <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
+    {% endif %}
+
+    <ul>
+    {% for segment in itinerary.itinerarysegment_set.all %}
+        <div class="panel-body">
+            <div class="col-sm-4">
+                <p>Location: {{ segment.location }}</p>
+                <p>Duration: {{ segment.duration }}h</p>
+                <p>From: {{ segment.start_time }}</p>
+                <p>To: {{ segment.end_time }}</p>
+                <p>Description: {{ segment.description }}</p>
+            </div>
+            <div class="col-sm-6">
+                {% if segment.photo %}
+                <img src="{{ segment.photo.url }}" class="img img-responsive full-width">
+                {% endif %}
+            </div>
+            <div class="col-sm-2">
+            {% if itinerary.owner_id == request.user.id %}
+                <a href="{% url 'triplan:itinerary_edit' itinerary.id segment.id %}"
+                   class="btn btn-info pull-right">Edit</a>
             {% endif %}
+            </div>
         </div>
-        <div class="col-sm-2">
-        {% if itinerary.owner_id == request.user.id %}
-            <a href="{% url 'triplan:itinerary_edit' itinerary.id segment.id %}"
-               class="btn btn-info pull-right">Edit</a>
-        {% endif %}
-        </div>
+
+    {% endfor %}
+    </ul>
+
+    <div class="col-sm-12">
+        <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
+        <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-success">Add New Segment</a>
     </div>
-
-{% endfor %}
-</ul>
-
-<div class="col-sm-12">
-    <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
-    <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-success">Add New Segment</a>
 </div>
-
 {% endblock body %}
