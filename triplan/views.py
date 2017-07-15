@@ -1,4 +1,3 @@
-from datetimewidget.widgets import DateTimeWidget
 from django import forms
 from django.urls import reverse_lazy
 from django.views import generic
@@ -21,7 +20,7 @@ class ItineraryEdit(generic.edit.UpdateView):
     fields = ["photo", "location", "duration", "description", "start_time", "end_time"]
     widgets = {
         "start_time": forms.TimeInput(format='%H:%M %p'),
-        "end_time": DateTimeWidget(usel10n=True, bootstrap_version=3)
+        "end_time": forms.TimeInput(format='%H:%M %p'),
     }
 
     def get_success_url(self):
@@ -44,8 +43,8 @@ class ItinerarySegmentCreate(generic.edit.CreateView):
     model = ItinerarySegment
     fields = ["photo", "location", "duration", "description", "start_time", "end_time"]
     widgets = {
-        "start_time": DateTimeWidget(usel10n=True, bootstrap_version=3),
-        "end_time": DateTimeWidget(usel10n=True, bootstrap_version=3)
+        "start_time": forms.TimeInput(format='%H:%M %p'),
+        "end_time": forms.TimeInput(format='%H:%M %p'),
     }
 
     def get_context_data(self, **kwargs):

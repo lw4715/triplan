@@ -6,10 +6,11 @@
     margin: 5px;
 }
 
-.itinerary-preview {
-
+.padding-tb-5 {
+    padding: 5px 0px;
 }
 
+/* itinerary text overlay on preview*/
 .itinerary-preview {
    position: relative;
    width: 100%; /* for IE 6 */
@@ -29,4 +30,9 @@
    background: rgb(0, 0, 0); /* fallback color */
    background: rgba(0, 0, 0, 0.5);
    padding: 10px;
+}
+
+/**/
+.form-label-align {
+    bottom: -10px;
 }

@@ -18,19 +18,30 @@
     <div class="col-sm-4 col-sm-offset-2">
         <form action="" enctype="multipart/form-data" method="post">
             {% csrf_token %}
-            {% bootstrap_form form layout='inline' %}
+
+            {% if form.non_field_errors %}
+                {% bootstrap_alert form.non_field_errors %}
+            {% endif %}
+
+            {% for field in form %}
+                {% bootstrap_field field layout='horizontal' horizontal_field_class='padding-tb-5 col-md-9' horizontal_label_class='form-label-align col-md-3'%}
+            {% endfor %}
+
+
             <a href="{% url 'triplan:itinerary_detail' itinerarysegment.itinerary.id %}" class="btn btn-default">Back</a>
             <button class="btn btn-success" type="submit">Save</button>
         </form>
     </div>
+
     <div class="col-sm-4">
         {% if itinerarysegment.photo %}
         <img src="{{ itinerarysegment.photo.url }}" class="img img-responsive full-width">
         {% endif %}
     </div>
-    <input id="pac-input" class="controls" type="text" placeholder="Where would you like to visit?">
+
     <div id="map" class="col-sm-4"></div>
-    {{ form.media }}
+
+{#    {{ form.media }}#}
 </div>
 
 {% endblock body %}
