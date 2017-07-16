@@ -38,6 +38,9 @@ class ItinerarySegment(models.Model):
     description = models.CharField(max_length=400)
     photo = models.ImageField(blank=True)
 
+    class Meta:
+        ordering = ['start_time']
+
     def __str__(self):
         return self.itinerary.__str__() + self.description.__str__()
 

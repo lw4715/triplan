@@ -38,6 +38,27 @@
     left: calc((100% - 600px)/2);
 }
 
+/* Timeline */
+.itinerary-seg {
+    border-left: 10px #5bc0de solid;
+}
+
+.timings {
+    position: absolute;
+    left: -20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.start-time {
+    position: relative;
+    top: -10px;
+}
+
+.end-time {
+    position: relative;
+    bottom: -20px;
+}
 /* itinerary text overlay on preview*/
 .itinerary-preview {
    position: relative;

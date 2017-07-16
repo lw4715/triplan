@@ -42,12 +42,16 @@
     <div class="col-sm-12 margin-top-20">
         <ul>
         {% for segment in itinerary.itinerarysegment_set.all %}
-            <div class="panel-body">
+            <div class="panel-body itinerary-seg">
+            <div class="timings">
+                <p class="start-time">{{ segment.start_time }}</p>
+                <p class="end-time">{{ segment.end_time }}</p>
+            </div>
             <div class="col-sm-4">
                 <p><strong>Location:</strong> {{ segment.location }}</p>
                 <p><strong>Duration:</strong> {{ segment.duration }}h</p>
-                <p><strong>From:</strong> {{ segment.start_time }}</p>
-                <p><strong>To:</strong> {{ segment.end_time }}</p>
+{#                <p><strong>From:</strong> {{ segment.start_time }}</p>#}
+{#                <p><strong>To:</strong> {{ segment.end_time }}</p>#}
                 <p><strong>Description:</strong> {{ segment.description }}</p>
             </div>
             <div class="col-sm-6">
