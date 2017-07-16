@@ -1,3 +1,4 @@
+from datetime import datetime, date
 import urllib
 
 from django.contrib.auth.models import User
@@ -22,7 +23,7 @@ class Itinerary(models.Model):
         return self.title
 
     @property
-    def locations(self):
+    def encoded_locations(self):
         location_list = []
         for segment in self.itinerarysegment_set.all():
             location_list.append(urllib.parse.quote_plus(segment.location))
@@ -32,7 +33,6 @@ class Itinerary(models.Model):
 class ItinerarySegment(models.Model):
     itinerary = models.ForeignKey(Itinerary)
     location = models.CharField(max_length=200)
-    duration = models.PositiveIntegerField()
     start_time = models.TimeField(default="12:00 PM")
     end_time = models.TimeField(default="1:00 PM")
     description = models.CharField(max_length=400)
@@ -40,3 +40,9 @@ class ItinerarySegment(models.Model):
 
     def __str__(self):
         return self.itinerary.__str__() + self.description.__str__()
+
+    @property
+    def duration(self):
+        # asseume duration always < 1 day
+        # TODO: display in hours and minutes / smart display
+        return datetime.combine(date.today(), self.end_time) - datetime.combine(date.today(), self.start_time)

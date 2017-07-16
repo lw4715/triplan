@@ -17,7 +17,7 @@ class ItineraryDetail(generic.DetailView):
 class ItineraryEdit(generic.edit.UpdateView):
     template_name = 'triplan/itinerary_edit.html'
     model = ItinerarySegment
-    fields = ["photo", "location", "duration", "description", "start_time", "end_time"]
+    fields = ["photo", "location", "description", "start_time", "end_time"]
     widgets = {
         "start_time": forms.TimeInput(format='%H:%M %p'),
         "end_time": forms.TimeInput(format='%H:%M %p'),
@@ -41,7 +41,7 @@ class ItineraryCreate(generic.edit.CreateView):
 class ItinerarySegmentCreate(generic.edit.CreateView):
     pass
     model = ItinerarySegment
-    fields = ["photo", "location", "duration", "description", "start_time", "end_time"]
+    fields = ["photo", "location", "description", "start_time", "end_time"]
     widgets = {
         "start_time": forms.TimeInput(format='%H:%M %p'),
         "end_time": forms.TimeInput(format='%H:%M %p'),
