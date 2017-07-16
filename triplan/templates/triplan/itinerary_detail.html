@@ -25,6 +25,9 @@
         <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width center-img">
         {% endif %}
     </div>
+    <a href="{% url 'triplan:itinerary_edit' itinerary.id %}" class="btn btn-info pull-right">
+        Edit Title or Preview Photo
+    </a>
 
     {# https://developers.google.com/maps/documentation/static-maps/intro #}
     <div class="col-sm-12 margin-5">
@@ -54,7 +57,7 @@
             </div>
             <div class="col-sm-2">
             {% if itinerary.owner_id == request.user.id %}
-                <a href="{% url 'triplan:itinerary_edit' itinerary.id segment.id %}"
+                <a href="{% url 'triplan:itinerarysegment_edit' itinerary.id segment.id %}"
                    class="btn btn-info pull-right">Edit segment</a>
             {% endif %}
             </div>

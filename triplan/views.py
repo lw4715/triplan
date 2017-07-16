@@ -14,19 +14,6 @@ class ItineraryDetail(generic.DetailView):
     model = Itinerary
 
 
-class ItineraryEdit(generic.edit.UpdateView):
-    template_name = 'triplan/itinerary_edit.html'
-    model = ItinerarySegment
-    fields = ["photo", "location", "description", "start_time", "end_time"]
-    widgets = {
-        "start_time": forms.TimeInput(format='%H:%M %p'),
-        "end_time": forms.TimeInput(format='%H:%M %p'),
-    }
-
-    def get_success_url(self):
-        return reverse_lazy('triplan:itinerary_detail', args=[self.kwargs['itinerary_pk']])
-
-
 class ItineraryCreate(generic.edit.CreateView):
     model = Itinerary
     fields = ["title", "preview_photo"]
@@ -59,3 +46,23 @@ class ItinerarySegmentCreate(generic.edit.CreateView):
 
     def get_success_url(self):
         return reverse_lazy('triplan:itinerary_detail', args=[self.kwargs['pk']])
+
+
+class ItineraryEdit(generic.edit.UpdateView):
+    template_name = "triplan/itinerary_edit.html"
+    model = Itinerary
+    fields = ["title", "preview_photo"]
+    success_url = reverse_lazy('triplan:itinerary_list')
+
+
+class ItinerarySegmentEdit(generic.edit.UpdateView):
+    template_name = "triplan/itinerarysegment_edit.html"
+    model = ItinerarySegment
+    fields = ["photo", "location", "description", "start_time", "end_time"]
+    widgets = {
+        "start_time": forms.TimeInput(format='%H:%M %p'),
+        "end_time": forms.TimeInput(format='%H:%M %p'),
+    }
+
+    def get_success_url(self):
+        return reverse_lazy('triplan:itinerary_detail', args=[self.kwargs['itinerary_pk']])
