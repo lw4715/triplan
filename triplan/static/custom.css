@@ -39,25 +39,30 @@
 }
 
 /* Timeline */
+.segment-wrapper {
+    display: flex;
+}
+
 .itinerary-seg {
     border-left: 10px #5bc0de solid;
+    border-radius: 10px;
 }
 
 .timings {
-    position: absolute;
-    left: -20px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
+    padding: 0 !important;
+    text-align: right;
 }
 
 .start-time {
-    position: relative;
-    top: -10px;
+    position: absolute;
+    top: 0;
 }
 
 .end-time {
-    position: relative;
-    bottom: -20px;
+    position: absolute;
+    bottom: 0;
 }
 /* itinerary text overlay on preview*/
 .itinerary-preview {
