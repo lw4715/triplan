@@ -7,26 +7,28 @@
         <h2 class="center">{{ itinerary.title }}</h2>
         <small class="pull-right margin-bottom-5">added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
     </div>
-    <div class="col-sm-12 center-img">
+    <div class="col-sm-12 margin-5">
         {% if itinerary.preview_photo %}
-        <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
+        <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width center-img">
         {% endif %}
     </div>
 
     {# https://developers.google.com/maps/documentation/static-maps/intro #}
-    <img src="https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap\
-    &markers=size:mid%7Ccolor:red%7C{{ itinerary.locations }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8"
-        height="300px" width="600px" class="img center-img">
-
-    <ul>
-    {% for segment in itinerary.itinerarysegment_set.all %}
-        <div class="panel-body">
+    <div class="col-sm-12 margin-5">
+        <img src="https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap\
+        &markers=size:mid%7Ccolor:red%7C{{ itinerary.locations }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8"
+            height="300px" width="600px" class="img center-img">
+    </div>
+    <div class="col-sm-12 margin-top-20">
+        <ul>
+        {% for segment in itinerary.itinerarysegment_set.all %}
+            <div class="panel-body">
             <div class="col-sm-4">
-                <p>Location: {{ segment.location }}</p>
-                <p>Duration: {{ segment.duration }}h</p>
-                <p>From: {{ segment.start_time }}</p>
-                <p>To: {{ segment.end_time }}</p>
-                <p>Description: {{ segment.description }}</p>
+                <p><strong>Location:</strong> {{ segment.location }}</p>
+                <p><strong>Duration:</strong> {{ segment.duration }}h</p>
+                <p><strong>From:</strong> {{ segment.start_time }}</p>
+                <p><strong>To:</strong> {{ segment.end_time }}</p>
+                <p><strong>Description:</strong> {{ segment.description }}</p>
             </div>
             <div class="col-sm-6">
                 {% if segment.photo %}
@@ -36,13 +38,15 @@
             <div class="col-sm-2">
             {% if itinerary.owner_id == request.user.id %}
                 <a href="{% url 'triplan:itinerary_edit' itinerary.id segment.id %}"
-                   class="btn btn-info pull-right">Edit</a>
+                   class="btn btn-info pull-right">Edit segment</a>
             {% endif %}
             </div>
         </div>
-
     {% endfor %}
     </ul>
+
+    </div>
+
 
     <div class="col-sm-12">
         <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
