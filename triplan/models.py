@@ -1,8 +1,6 @@
-from numbers import Number
+import urllib
 
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -22,6 +20,13 @@ class Itinerary(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def locations(self):
+        location_list = []
+        for segment in self.itinerarysegment_set.all():
+            location_list.append(urllib.parse.quote_plus(segment.location))
+        return "%7C".join(location_list)
 
 
 class ItinerarySegment(models.Model):

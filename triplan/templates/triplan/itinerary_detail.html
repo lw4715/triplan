@@ -3,13 +3,20 @@
 {% load humanize %}
 
 <div class="panel col-sm-8 col-sm-offset-2">
+    <div class="col-sm-12">
+        <h2 class="center">{{ itinerary.title }}</h2>
+        <small class="pull-right margin-bottom-5">added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
+    </div>
+    <div class="col-sm-12 center-img">
+        {% if itinerary.preview_photo %}
+        <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
+        {% endif %}
+    </div>
 
-    <h2>{{ itinerary.title }}</h2>
-    <small>added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
-
-    {% if itinerary.preview_photo %}
-    <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive full-width">
-    {% endif %}
+    {# https://developers.google.com/maps/documentation/static-maps/intro #}
+    <img src="https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap\
+    &markers=size:mid%7Ccolor:red%7C{{ itinerary.locations }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8"
+        height="300px" width="600px" class="img center-img">
 
     <ul>
     {% for segment in itinerary.itinerarysegment_set.all %}
