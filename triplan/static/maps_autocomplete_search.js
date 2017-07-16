@@ -1,24 +1,42 @@
 function initAutocomplete() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -33.8688, lng: 151.2195},
-        zoom: 13,
-        mapTypeId: 'roadmap'
-    });
-
 // Create the search box and link it to the UI element.
     var input = document.getElementById('id_location');
     var searchBox = new google.maps.places.SearchBox(input);
     // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-// Bias the SearchBox results towards current map's viewport.
+    var map = new google.maps.Map(document.getElementById('map'), {
+        // center: {lat: -33.8688, lng: 151.2195},
+        zoom: 13,
+        mapTypeId: 'roadmap'
+    });
+
+    // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function () {
         searchBox.setBounds(map.getBounds());
     });
 
     var markers = [];
-// Listen for the event fired when the user selects a prediction and retrieve
-// more details for that place.
-    searchBox.addListener('places_changed', function () {
+
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', updateMap);
+
+    /* update map when page loads */
+     var itemsloaded = google.maps.event.addDomListener(document.body, 'DOMNodeInserted',
+        function (e) {
+            if (e.target.className === 'pac-item') {
+                //remove the listener
+                google.maps.event.removeListener(itemsloaded);
+                //trigger the events
+                google.maps.event.trigger(input, 'keydown', {keyCode: 40})
+                google.maps.event.trigger(input, 'keydown', {keyCode: 13})
+                google.maps.event.trigger(input, 'focus')
+                google.maps.event.trigger(input, 'keydown', {keyCode: 13})
+            }
+        });
+
+    function updateMap() {
+        console.log("updating map!");
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
@@ -62,5 +80,5 @@ function initAutocomplete() {
             }
         });
         map.fitBounds(bounds);
-    });
+    };
 }
