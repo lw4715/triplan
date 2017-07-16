@@ -31,6 +31,13 @@
     padding: 5px 0px;
 }
 
+/* itinerary_detail */
+#map-zoom {
+    position: absolute;
+    top: 0;
+    left: calc((100% - 600px)/2);
+}
+
 /* itinerary text overlay on preview*/
 .itinerary-preview {
    position: relative;
@@ -57,3 +64,4 @@
 .form-label-align {
     bottom: -10px;
 }
+
