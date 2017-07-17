@@ -2,6 +2,10 @@
     border-radius: 5px;
 }
 
+.padding-0 {
+    padding: 0;
+}
+
 .margin-5 {
     margin: 5px;
 }
@@ -46,6 +50,12 @@
 .itinerary-seg {
     border-left: 10px #5bc0de solid;
     border-radius: 10px;
+}
+
+@media screen and (max-width: 950px) {
+    .timings {
+        display: none;
+    }
 }
 
 .timings {

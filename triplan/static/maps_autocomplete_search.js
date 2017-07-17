@@ -22,7 +22,7 @@ function initAutocomplete() {
     searchBox.addListener('places_changed', updateMap);
 
     /* update map when page loads */
-     var itemsloaded = google.maps.event.addDomListener(document.body, 'DOMNodeInserted',
+    var itemsloaded = google.maps.event.addDomListener(document.body, 'DOMNodeInserted',
         function (e) {
             if (e.target.className === 'pac-item') {
                 //remove the listener
@@ -78,7 +78,22 @@ function initAutocomplete() {
             } else {
                 bounds.extend(place.geometry.location);
             }
+
+            updatePlacesPhoto(place);
         });
         map.fitBounds(bounds);
     };
+
+    function updatePlacesPhoto(place) {
+        console.log("updating for", place);
+        var photos = place.photos;
+        var places_photo = $("#places_photo");
+        if (!photos) {
+            return;
+        }
+        var photo_url = photos[0].getUrl({'maxWidth': 600, 'maxHeight': 600});
+        console.log(photo_url);
+        places_photo.attr("src", photo_url);
+    }
 }
+

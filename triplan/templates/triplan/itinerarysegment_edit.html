@@ -6,26 +6,27 @@
     <link rel="stylesheet" type="text/css" href="{% static 'maps.css' %}">
     <script src="{% static 'maps_autocomplete_search.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8&libraries=places&callback=initAutocomplete"
-     async defer></script>
+            async defer></script>
 {% endblock imports %}
 
 {% block body %}
 
-<div class="col-sm-8 col-sm-offset-2">
-<h3>Editing <strong>{{ itinerarysegment.location }}</strong></h3>
-</div>
-<div class="col-sm-4 col-sm-offset-2">
-    {% url 'triplan:itinerary_detail' itinerarysegment.itinerary.id as url %}
-    {% include 'triplan/edit_form.html' with back_url=url %}
-</div>
+    <div class="col-sm-10 col-sm-offset-1">
+        <h3>Editing <strong>{{ itinerarysegment.location }}</strong></h3>
+    </div>
+    <div class="col-sm-5 col-sm-offset-1">
+        {% url 'triplan:itinerary_detail' itinerarysegment.itinerary.id as url %}
+        {% include 'triplan/edit_form.html' with back_url=url %}
+    </div>
 
-<div class="col-sm-4">
-    {% if itinerarysegment.photo %}
-    <img src="{{ itinerarysegment.photo.url }}" class="img img-responsive full-width">
-    {% endif %}
-</div>
-
-<div id="map" class="col-sm-4"></div>
+    <div class="col-sm-3">
+        {% if itinerarysegment.photo %}
+            <img src="{{ itinerarysegment.photo.url }}" class="img img-responsive full-width">
+        {% endif %}
+    </div>
+    <div id="map" class="col-sm-3"></div>
+    <image id="places_photo" src=""
+           class="col-sm-3 margin-top-20 img img-responsive full-width">
 
 {% endblock body %}
 

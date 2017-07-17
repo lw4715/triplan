@@ -34,8 +34,6 @@ class Itinerary(models.Model):
         total = timedelta()
         for segment in self.itinerarysegment_set.all():
             total += segment.duration
-            print("duration: ", total)
-            print(self.format_delta_time(total))
         return self.format_delta_time(total)
 
     @staticmethod
@@ -74,3 +72,7 @@ class ItinerarySegment(models.Model):
         # assume duration always < 1 day
         # TODO: display in hours and minutes / smart display
         return datetime.combine(date.today(), self.end_time) - datetime.combine(date.today(), self.start_time)
+
+    @property
+    def encoded_location(self):
+        return urllib.parse.quote_plus(self.location)

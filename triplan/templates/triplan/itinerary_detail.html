@@ -34,39 +34,41 @@
         <button id="map-zoom" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
         <img id="default-map" src=
          "https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap\&markers=size:mid%7Ccolor:red%7C{{ itinerary.encoded_locations }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8"
-            height="300px" width="600px" class="img center-img">
+            width="600px" height="300px" class="img center-img">
         <img id="zoomed-map" src=
          "https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap\&markers=size:mid%7Ccolor:red%7C{{ itinerary.encoded_locations }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8&zoom=12"
-            height="300px" width="600px" class="img center-img hide">
+            width="600px" height="300px" class="img center-img hide">
     </div>
     <div class="col-sm-12 margin-top-20">
         {% for segment in itinerary.itinerarysegment_set.all %}
-            <div class="panel-body segment-wrapper">
+        <div class="panel-body segment-wrapper">
             <div class="col-sm-1 timings">
                 <p class="start-time">{{ segment.start_time }}</p>
                 <p class="end-time">{{ segment.end_time }}</p>
             </div>
-            <div class="col-sm-5 itinerary-seg">
+            <div class="col-sm-5 col-xs-12 itinerary-seg">
                 <p><strong>Location:</strong> {{ segment.location }}</p>
                 <p><strong>Duration:</strong> {{ segment.duration }}h</p>
 {#                <p><strong>From:</strong> {{ segment.start_time }}</p>#}
 {#                <p><strong>To:</strong> {{ segment.end_time }}</p>#}
                 <p><strong>Description:</strong> {{ segment.description }}</p>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-5 col-xs-10">
+                <img id="default-map" src=
+                "https://maps.googleapis.com/maps/api/staticmap?size=200x150&maptype=roadmap\&markers=size:mid%7Ccolor:red%7C{{ segment.encoded_location }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8&zoom=15"
+                 class="img center-img img-responsive full-width margin-5">
                 {% if segment.photo %}
-                <img src="{{ segment.photo.url }}" class="img img-responsive full-width">
+                    <img src="{{ segment.photo.url }}" class="img img-responsive full-width margin-5">
                 {% endif %}
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-1 col-xs-2">
             {% if itinerary.owner_id == request.user.id %}
                 <a href="{% url 'triplan:itinerarysegment_edit' itinerary.id segment.id %}"
                    class="btn btn-info pull-right">Edit</a>
             {% endif %}
             </div>
         </div>
-    {% endfor %}
-
+        {% endfor %}
     </div>
 
 
