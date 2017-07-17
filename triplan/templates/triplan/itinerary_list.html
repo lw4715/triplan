@@ -21,10 +21,10 @@
                          class="img img-responsive full-width">
                     {% endif %}
                     <p class="itinerary-desc">
-                        <strong class="itinerary-text">{{ itinerary.title }} </strong> &nbsp; <br/>
-{#                        <span class="itinerary-text">#}
-{#                        added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}#}
-{#                        </span>#}
+                        <strong class="itinerary-text">{{ itinerary.title }} </strong><br/>
+                        <span class="itinerary-text">
+                            {{ itinerary.total_duration }}
+                        </span>
                     </p>
                 </div>
             </a>

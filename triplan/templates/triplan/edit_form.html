@@ -1,0 +1,16 @@
+{% load bootstrap3 %}
+
+<form action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        {% bootstrap_alert form.non_field_errors %}
+    {% endif %}
+
+    {% for field in form %}
+        {% bootstrap_field field layout='horizontal' horizontal_field_class='padding-tb-5 col-md-9' horizontal_label_class='form-label-align col-md-3'%}
+    {% endfor %}
+
+    <a href="{{ back_url }}" class="btn btn-default">Back</a>
+    <button class="btn btn-success" type="submit">Save</button>
+</form>

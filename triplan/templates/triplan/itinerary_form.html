@@ -4,12 +4,8 @@
 
 <div class="panel col-sm-8 col-sm-offset-2">
     <h3>Create new itinerary</h3>
-    <form action="" enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        {% bootstrap_form form layout='inline' %}
-        <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
-        <button class="btn btn-success" type="submit" value="save">Save</button>
-    </form>
+    {% url 'triplan:itinerary_list' as url %}
+    {% include 'triplan/edit_form.html' with back_url=url %}
 </div>
 
 {% endblock body %}

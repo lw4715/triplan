@@ -15,21 +15,8 @@
         <h3>Adding new segment in <strong>{{ itinerary.title }}</strong></h3>
     </div>
     <div class="col-sm-4 col-sm-offset-2">
-        <form action="" enctype="multipart/form-data" method="post">
-            {% csrf_token %}
-
-            {% if form.non_field_errors %}
-                {% bootstrap_alert form.non_field_errors %}
-            {% endif %}
-
-            {% for field in form %}
-                {% bootstrap_field field layout='horizontal' horizontal_field_class='padding-tb-5 col-md-9' horizontal_label_class='form-label-align col-md-3'%}
-            {% endfor %}
-            <div class="col-sm-12">
-                <a href="{% url 'triplan:itinerary_detail' itinerary.id %}" class="btn btn-default">Back</a>
-                <button class="btn btn-success" type="submit">Save</button>
-            </div>
-        </form>
+    {% url 'triplan:itinerary_detail' itinerary.id as url %}
+    {% include 'triplan/edit_form.html' with back_url=url %}
     </div>
 
     <div id="map" class="col-sm-4"></div>

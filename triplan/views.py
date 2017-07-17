@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.admin.widgets import AdminTimeWidget
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -30,8 +31,10 @@ class ItinerarySegmentCreate(generic.edit.CreateView):
     model = ItinerarySegment
     fields = ["photo", "location", "description", "start_time", "end_time"]
     widgets = {
-        "start_time": forms.TimeInput(format='%H:%M %p'),
-        "end_time": forms.TimeInput(format='%H:%M %p'),
+        "start_time": AdminTimeWidget(format='%H:%M'),
+        "end_time": AdminTimeWidget(format='%H:%M'),
+        # "start_time": forms.TimeInput(format='%H:%M %p'),
+        # "end_time": forms.TimeInput(format='%H:%M %p'),
     }
 
     def get_context_data(self, **kwargs):

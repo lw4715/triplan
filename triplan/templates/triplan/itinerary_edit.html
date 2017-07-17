@@ -1,27 +1,16 @@
 {% extends 'triplan/base.html' %}
 
 {% block body %}
-{% load bootstrap3 %}
 
 <div class="col-sm-8 col-sm-offset-2">
     <h3>Editing <strong>{{ itinerary.title }}</strong></h3>
     {% if itinerary.preview_photo %}
     <img src="{{ itinerary.preview_photo.url }}" class="img img-responsive center-img full-width">
     {% endif %}
-    <form action="" enctype="multipart/form-data" method="post">
-        {% csrf_token %}
 
-        {% if form.non_field_errors %}
-            {% bootstrap_alert form.non_field_errors %}
-        {% endif %}
+    {% url 'triplan:itinerary_list' as url %}
+    {% include 'triplan/edit_form.html' with back_url=url %}
 
-        {% for field in form %}
-            {% bootstrap_field field layout='horizontal' horizontal_field_class='padding-tb-5 col-md-9' horizontal_label_class='form-label-align col-md-3'%}
-        {% endfor %}
-
-        <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
-        <button class="btn btn-success" type="submit">Save</button>
-    </form>
 </div>
 
 {% endblock body %}
