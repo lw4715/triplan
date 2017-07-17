@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import urllib
 
 from django.contrib.auth.models import User
@@ -29,6 +29,31 @@ class Itinerary(models.Model):
             location_list.append(urllib.parse.quote_plus(segment.location))
         return "%7C".join(location_list)
 
+    @property
+    def total_duration(self):
+        total = timedelta()
+        for segment in self.itinerarysegment_set.all():
+            total += segment.duration
+            print("duration: ", total)
+            print(self.format_delta_time(total))
+        return self.format_delta_time(total)
+
+    @staticmethod
+    def format_delta_time(tdelta):
+        res = ""
+        days = tdelta.days
+        hours, rem = divmod(tdelta.seconds, 3600)
+        minutes, sec = divmod(rem, 60)
+        if days > 0:
+            res += str(days) + "days "
+        if hours > 0:
+            res += str(hours) + "h "
+        if minutes > 0:
+            res += str(minutes) + "min"
+        if res == "":
+            return "No trips added"
+        return res
+
 
 class ItinerarySegment(models.Model):
     itinerary = models.ForeignKey(Itinerary)
@@ -46,6 +71,6 @@ class ItinerarySegment(models.Model):
 
     @property
     def duration(self):
-        # asseume duration always < 1 day
+        # assume duration always < 1 day
         # TODO: display in hours and minutes / smart display
         return datetime.combine(date.today(), self.end_time) - datetime.combine(date.today(), self.start_time)
