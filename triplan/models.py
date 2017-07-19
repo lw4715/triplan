@@ -79,6 +79,7 @@ class CategoryUtil:
 class ItinerarySegment(models.Model):
     itinerary = models.ForeignKey(Itinerary)
     location = models.CharField(max_length=200)
+    day_number = models.PositiveIntegerField(default=1)
     start_time = models.TimeField(default="12:00 PM")
     end_time = models.TimeField(default="1:00 PM")
     description = models.CharField(max_length=400)

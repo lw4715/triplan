@@ -65,14 +65,26 @@
     text-align: right;
 }
 
+.day {
+    position: absolute;
+    top: -25px;
+    left: 0;
+}
+
 .start-time {
     position: absolute;
+    font-size: 12px;
+    padding: 5px;
     top: 0;
+    right: 5px;
 }
 
 .end-time {
     position: absolute;
+    font-size: 12px;
+    padding: 5px !important;
     bottom: 0;
+    right: 5px;
 }
 /* itinerary text overlay on preview*/
 .itinerary-preview {
