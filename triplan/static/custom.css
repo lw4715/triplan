@@ -10,12 +10,12 @@
     margin: 5px;
 }
 
-.margin-bottom-5 {
-    margin-bottom: 5px;
-}
-
 .margin-top-20 {
     margin-top: 20px;
+}
+
+.margin-bottom-5 {
+    margin-bottom: 5px;
 }
 
 .margin-auto {
@@ -40,6 +40,11 @@
     position: absolute;
     top: 0;
     left: calc((100% - 600px)/2);
+}
+
+.total-cost {
+    margin-bottom: 30px;
+    margin-left: 100px;
 }
 
 /* Timeline */

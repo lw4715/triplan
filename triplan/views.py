@@ -29,10 +29,10 @@ class ItineraryCreate(generic.edit.CreateView):
 class ItinerarySegmentCreate(generic.edit.CreateView):
     pass
     model = ItinerarySegment
-    fields = ["photo", "location","category", "description", "day_number", "start_time", "end_time"]
+    fields = ["photo", "location","category", "description", "day_number", "start_time", "end_time", "cost"]
     widgets = {
-        "start_time": AdminTimeWidget(format='%H:%M'),
-        "end_time": AdminTimeWidget(format='%H:%M'),
+        "start_time": AdminTimeWidget(format='fa'),
+        "end_time": AdminTimeWidget(format='fa'),
         # "start_time": forms.TimeInput(format='%H:%M %p'),
         # "end_time": forms.TimeInput(format='%H:%M %p'),
     }
@@ -61,10 +61,10 @@ class ItineraryEdit(generic.edit.UpdateView):
 class ItinerarySegmentEdit(generic.edit.UpdateView):
     template_name = "triplan/itinerarysegment_edit.html"
     model = ItinerarySegment
-    fields = ["photo", "location", "category", "description", "day_number", "start_time", "end_time"]
+    fields = ["photo", "location", "category", "description", "day_number", "start_time", "end_time", "cost"]
     widgets = {
-        "start_time": forms.TimeInput(format='%H:%M %p'),
-        "end_time": forms.TimeInput(format='%H:%M %p'),
+        "start_time": forms.TimeInput(format='fa'),
+        "end_time": forms.TimeInput(format='fa'),
     }
 
     def get_success_url(self):

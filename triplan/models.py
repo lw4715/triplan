@@ -36,6 +36,13 @@ class Itinerary(models.Model):
             total += segment.duration
         return self.format_delta_time(total)
 
+    @property
+    def total_cost(self):
+        cost = 0
+        for segment in self.itinerarysegment_set.all():
+            cost += segment.cost
+        return cost
+
     @staticmethod
     def format_delta_time(tdelta):
         res = ""
@@ -85,6 +92,7 @@ class ItinerarySegment(models.Model):
     description = models.CharField(max_length=400)
     photo = models.ImageField(blank=True)
     category = models.IntegerField(default=0, choices=CategoryUtil.get_category_choices())
+    cost = models.DecimalField(default=0, decimal_places=2, max_digits=6)
 
     class Meta:
         ordering = ['start_time']

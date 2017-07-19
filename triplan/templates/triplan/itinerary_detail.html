@@ -18,7 +18,7 @@
 <div class="panel col-sm-10 col-sm-offset-1">
     <div class="col-sm-12">
         <h2 class="center">{{ itinerary.title }}</h2>
-        <small class="pull-right margin-bottom-5">added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small>
+        <p><small class="pull-right margin-bottom-5">added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small></p>
     </div>
     <div class="col-sm-12 margin-5">
         {% if itinerary.preview_photo %}
@@ -52,6 +52,7 @@
                     {{ segment.get_category_display }}</h4>
                 <p><strong>Location:</strong> {{ segment.location }}</p>
                 <p><strong>Duration:</strong> {{ segment.duration }}h</p>
+                <p>Cost: £{{ segment.cost | floatformat:2|intcomma}}</p>
 {#                <p><strong>From:</strong> {{ segment.start_time }}</p>#}
 {#                <p><strong>To:</strong> {{ segment.end_time }}</p>#}
                 <p><strong>Description:</strong> {{ segment.description }}</p>
@@ -73,11 +74,18 @@
         </div>
         {% endfor %}
     </div>
+    <div class="col-sm-12 total-cost">
+        <hr>
+        <h3 class="pull-left">
+            <span class="fa fa-calculator fa-lg"></span>
+            Total cost = £{{ itinerary.total_cost }}
+        </h3>
+    </div>
 
 
     <div class="col-sm-12">
         <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
-        <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-success">Add New Segment</a>
+        <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-success pull-right">Add New Segment</a>
     </div>
 </div>
 {% endblock body %}
