@@ -95,7 +95,7 @@ class ItinerarySegment(models.Model):
     cost = models.DecimalField(default=0, decimal_places=2, max_digits=6)
 
     class Meta:
-        ordering = ['start_time']
+        ordering = ['day_number', 'start_time']
 
     def __str__(self):
         return self.itinerary.__str__() + self.description.__str__()
