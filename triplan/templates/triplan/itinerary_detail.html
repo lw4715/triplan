@@ -47,6 +47,8 @@
                 <p class="end-time">{{ segment.end_time }}</p>
             </div>
             <div class="col-sm-5 col-xs-12 itinerary-seg">
+                <h4><span id="cateogy-icon" class="{{ segment.category_icon_class }}" area-hidden="true"></span>
+                    {{ segment.get_category_display }}</h4>
                 <p><strong>Location:</strong> {{ segment.location }}</p>
                 <p><strong>Duration:</strong> {{ segment.duration }}h</p>
 {#                <p><strong>From:</strong> {{ segment.start_time }}</p>#}

@@ -36,7 +36,6 @@ function initAutocomplete() {
         });
 
     function updateMap() {
-        console.log("updating map!");
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
@@ -85,14 +84,13 @@ function initAutocomplete() {
     };
 
     function updatePlacesPhoto(place) {
-        console.log("updating for", place);
         var photos = place.photos;
         var places_photo = $("#places_photo");
         if (!photos) {
+            console.log("No places photos for ", place);
             return;
         }
         var photo_url = photos[0].getUrl({'maxWidth': 600, 'maxHeight': 600});
-        console.log(photo_url);
         places_photo.attr("src", photo_url);
     }
 }

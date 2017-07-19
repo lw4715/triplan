@@ -53,6 +53,29 @@ class Itinerary(models.Model):
         return res
 
 
+class CategoryUtil:
+    category_list = ["Food", "Educational", "Outdoor", "Games", "Social", "Shopping",
+                     "Casino", "Recreational", "Photo-spot", "Other"]
+    icon_list     = ["cutlery", "university", "sun-o", "gamepad", "users", "shopping-bag",
+                     "money", "soccer-ball-o", "camera", "lightbulb-o"]
+
+    @staticmethod
+    def get_category_choices():
+        integer_list = list(range(0, len(CategoryUtil.category_list)))
+        return zip(integer_list, CategoryUtil.category_list)
+
+    @staticmethod
+    def prepend_class_name(icon_name):
+        return "fa fa-" + str(icon_name)
+
+    @staticmethod
+    def get_icon_class(category):
+        icon_class_name_list = map(CategoryUtil.prepend_class_name, CategoryUtil.icon_list)
+        return (
+            dict(zip(list(range(0, len(CategoryUtil.category_list))), icon_class_name_list))
+        ).get(category, "")
+
+
 class ItinerarySegment(models.Model):
     itinerary = models.ForeignKey(Itinerary)
     location = models.CharField(max_length=200)
@@ -60,6 +83,7 @@ class ItinerarySegment(models.Model):
     end_time = models.TimeField(default="1:00 PM")
     description = models.CharField(max_length=400)
     photo = models.ImageField(blank=True)
+    category = models.IntegerField(default=0, choices=CategoryUtil.get_category_choices())
 
     class Meta:
         ordering = ['start_time']
@@ -76,3 +100,7 @@ class ItinerarySegment(models.Model):
     @property
     def encoded_location(self):
         return urllib.parse.quote_plus(self.location)
+
+    @property
+    def category_icon_class(self):
+        return CategoryUtil.get_icon_class(self.category)
