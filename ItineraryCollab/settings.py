@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'triplan',
     'bootstrap3',
     'django.contrib.humanize',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

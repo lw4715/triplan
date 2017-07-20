@@ -14,11 +14,12 @@
 
 {% block body %}
 {% load humanize %}
+{% load mathfilters %}
 
-<div class="panel col-sm-10 col-sm-offset-1">
+<div class="col-sm-10 col-sm-offset-1">
     <div class="col-sm-12">
         <h2 class="center">{{ itinerary.title }}</h2>
-        <p><small class="pull-right margin-bottom-5">added by {{ itinerary.owner }} on {{ itinerary.date_added | naturaltime }}</small></p>
+        <p><small class="pull-right margin-bottom-5">added by {{ itinerary.owner }} on {{ itinerary.date_added|naturaltime }}</small></p>
     </div>
     <div class="col-sm-12 margin-5">
         {% if itinerary.preview_photo %}
@@ -26,9 +27,10 @@
         {% endif %}
     </div>
     <a href="{% url 'triplan:itinerary_edit' itinerary.id %}" class="btn btn-info pull-right">
-        Edit Title or Preview Photo
+        Edit Itinerary
     </a>
 
+    {# Static Map #}
     {# https://developers.google.com/maps/documentation/static-maps/intro #}
     <div class="col-sm-12 margin-5">
         <button id="map-zoom" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
@@ -39,24 +41,30 @@
          "https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap\&markers=size:mid%7Ccolor:red%7C{{ itinerary.encoded_locations }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8&zoom=12"
             width="600px" height="300px" class="img center-img hide">
     </div>
+
+    {# Itinerary Segment #}
     <div class="col-sm-12 margin-top-20">
         {% for segment in itinerary.itinerarysegment_set.all %}
-        <div class="panel-body segment-wrapper">
+        <div class="segment-wrapper">
+
+            {# Timeline #}
             <div class="col-sm-1 timings">
                 <p class="day">Day {{ segment.day_number }}</p>
                 <p class="start-time badge">{{ segment.start_time }}</p>
                 <p class="end-time badge">{{ segment.end_time }}</p>
             </div>
+
+            {# Info #}
             <div class="col-sm-5 col-xs-12 itinerary-seg">
                 <h4><span id="cateogy-icon" class="{{ segment.category_icon_class }}" area-hidden="true"></span>
                     {{ segment.get_category_display }}</h4>
                 <p><strong>Location:</strong> {{ segment.location }}</p>
                 <p><strong>Duration:</strong> {{ segment.duration }}h</p>
-                <p>Cost: £{{ segment.cost | floatformat:2|intcomma}}</p>
-{#                <p><strong>From:</strong> {{ segment.start_time }}</p>#}
-{#                <p><strong>To:</strong> {{ segment.end_time }}</p>#}
+                <p>Cost: £{{ segment.cost|floatformat:2|intcomma}}</p>
                 <p><strong>Description:</strong> {{ segment.description }}</p>
             </div>
+
+            {# Images #}
             <div class="col-sm-5 col-xs-10">
                 <img id="default-map" src=
                 "https://maps.googleapis.com/maps/api/staticmap?size=200x150&maptype=roadmap\&markers=size:mid%7Ccolor:red%7C{{ segment.encoded_location }}&key=AIzaSyBJz1pSa-my6Cq3DrqIy-MB0keiTHL-rq8&zoom=15"
@@ -65,15 +73,20 @@
                     <img src="{{ segment.photo.url }}" class="img img-responsive full-width margin-5">
                 {% endif %}
             </div>
+
+            {# Edit button #}
             <div class="col-sm-1 col-xs-2">
             {% if itinerary.owner_id == request.user.id %}
                 <a href="{% url 'triplan:itinerarysegment_edit' itinerary.id segment.id %}"
                    class="btn btn-info pull-right">Edit</a>
             {% endif %}
             </div>
+
         </div>
         {% endfor %}
     </div>
+
+    {# Total cost #}
     <div class="col-sm-12 total-cost">
         <hr>
         <h3 class="pull-left">
@@ -82,10 +95,28 @@
         </h3>
     </div>
 
-
+    {# Buttons #}
     <div class="col-sm-12">
         <a href="{% url 'triplan:itinerary_list' %}" class="btn btn-default">Back</a>
         <a href="{% url 'triplan:itinerarysegment_create' itinerary.id %}" class="btn btn-success pull-right">Add New Segment</a>
     </div>
 </div>
+
+{#  Calendar  #}
+<div class="col-sm-10 col-sm-offset-1 margin-top-20">
+{% for day in view.days_range %}
+    <div class="col-sm-2">
+        <h4>Day {{ day }}</h4>
+        {% for segment in itinerary.itinerarysegment_set.all %}
+            {% if segment.day_number == day %}
+            <div class="alert alert-success" style="padding-bottom: {{ segment.duration.seconds|div:36|div:24|mul:2 }}%">
+                <p>{{ segment.location|truncatewords:5 }}</p>
+                <p>{{ segment.start_time }} - {{ segment.end_time }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+</div>
+
 {% endblock body %}

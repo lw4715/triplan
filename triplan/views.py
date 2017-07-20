@@ -14,10 +14,14 @@ class ItineraryList(generic.ListView):
 class ItineraryDetail(generic.DetailView):
     model = Itinerary
 
+    def days_range(self):
+        print("days_range", self.get_object().total_duration)
+        return range(1, self.get_object().total_duration + 1)
+
 
 class ItineraryCreate(generic.edit.CreateView):
     model = Itinerary
-    fields = ["title", "preview_photo"]
+    fields = ["title", "preview_photo", "start_date"]
     success_url = reverse_lazy('triplan:itinerary_list')
 
     def form_valid(self, form):
@@ -54,7 +58,7 @@ class ItinerarySegmentCreate(generic.edit.CreateView):
 class ItineraryEdit(generic.edit.UpdateView):
     template_name = "triplan/itinerary_edit.html"
     model = Itinerary
-    fields = ["title", "preview_photo"]
+    fields = ["title", "preview_photo", "start_date"]
     success_url = reverse_lazy('triplan:itinerary_list')
 
 
