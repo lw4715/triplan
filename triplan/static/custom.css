@@ -1,5 +1,7 @@
 .img {
     border-radius: 5px;
+    width: 100%;
+    height: 225px;
 }
 
 .padding-0 {
@@ -93,13 +95,14 @@
 }
 /* itinerary text overlay on preview*/
 .itinerary-preview {
-   position: relative;
-   width: 100%; /* for IE 6 */
+    position: relative;
+    width: 100%; /* for IE 6 */
+    height: 250px !important;
 }
 
 .itinerary-desc {
     position: absolute;
-    bottom: 5px;
+    top: 100px;
     left: 0;
     width: 100%;
 }
@@ -116,5 +119,13 @@
 /* forms */
 .form-label-align {
     bottom: -10px;
+}
+
+/* calendar */
+.calendar {
+    margin-top: 20px;
+    border-radius: 10px;
+    border: #cbcbcb solid 2px;
+    padding: 20px;
 }
 

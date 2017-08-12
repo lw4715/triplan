@@ -5,11 +5,23 @@
 
 <div class="panel col-sm-10 col-sm-offset-1">
     <div class="col-sm-12 margin-5">
-        <h1> Hello world, {{ request.user.username }}.</h1>
+        <h1> Ready for your next trip {{ request.user.username }}?</h1>
         <a href="{% url 'triplan:itinerary_create' %}" class="btn btn-success pull-right">Create new itinerary</a>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ category }}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="group">
+            <li><a href="{% url 'triplan:itinerary_list' %}">All</a></li>
+            {% for c in all_categories %}
+                <li><a href="{% url 'triplan:itinerary_list_category' forloop.counter0 %}">{{ c }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
 
     <div class="col-sm-12">
+        <small class="col-sm-12">{{ itinerary_list | length }} itineraries found</small>
+
         {% for itinerary in itinerary_list %}
         <div class="col-sm-4 col-xs-6">
             <a href="{% url 'triplan:itinerary_detail' itinerary.id %}">
@@ -23,8 +35,8 @@
                     <p class="itinerary-desc">
                         <strong class="itinerary-text">{{ itinerary.title }} </strong><br/>
                         <span class="itinerary-text">
-                            {{ itinerary.total_duration_str }} &nbsp;
-                            £{{ itinerary.total_cost }}
+                            {{ itinerary.total_duration_str }} days &nbsp;
+{#                            £{{ itinerary.total_cost }}#}
                         </span>
                     </p>
                 </div>

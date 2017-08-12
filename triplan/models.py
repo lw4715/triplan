@@ -19,6 +19,9 @@ class Itinerary(models.Model):
     date_added = models.DateTimeField(auto_now=True)
     preview_photo = models.ImageField(blank=True)
     start_date = models.DateField(blank=True, default=date.today())
+    shared_users = models.ManyToManyField(Profile, related_name='shared_users', blank=True)
+    public_view = models.BooleanField(default=True)
+    favourited_by = models.ManyToManyField(Profile, related_name='fav_by', blank=True)
 
     def __str__(self):
         return self.title
@@ -37,14 +40,11 @@ class Itinerary(models.Model):
             if segment.day_number > days:
                 days = segment.day_number
         return days
-        # total = timedelta()
-        # for segment in self.itinerarysegment_set.all():
-        #     total += segment.duration
-        # return total
 
     @property
     def total_duration_str(self):
-        return self.format_delta_time(self.total_duration)
+        return self.total_duration
+        # return self.format_delta_time(self.total_duration)
 
     @property
     def total_cost(self):
@@ -75,6 +75,10 @@ class CategoryUtil:
                      "Casino", "Recreational", "Photo-spot", "Transport", "Flight", "Other"]
     icon_list     = ["cutlery", "university", "sun-o", "gamepad", "users", "shopping-bag",
                      "money", "soccer-ball-o", "camera", "subway", "plane", "lightbulb-o"]
+
+    @staticmethod
+    def get_category_names():
+        return CategoryUtil.category_list
 
     @staticmethod
     def get_category_choices():
