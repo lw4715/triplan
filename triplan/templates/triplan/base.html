@@ -17,8 +17,75 @@
 
     {{ form.media }}
 
+    <script>
+    $(document).ready(function() {
+        console.log("helloworld!");
+        $('#location_search_form').submit(function (event) {
+            event.preventDefault();
+            var search_path = $(this).attr('data-url').replace(/\/$/, "");
+            var data = $("#search_input").val();
+            console.log("data=", data, "url=", search_path);
+            var search_url =  search_path + data + "/";
+            console.log("Navigating to", search_url);
+            $(location).attr('href', search_url.toString());
+            window.location.replace(search_url)
+        });
+    })
+    </script>
+
 </head>
 <body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'triplan:itinerary_list' %}">Triplan</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'triplan:user_profile' %}">Profile</a></li>
+        <li><a href="#">My Favourites</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Hello world, {{ request.user }}</a></li>
+      </ul>
+    {#  Search form  #}
+      <form id="location_search_form" class="navbar-form navbar-right" data-url="{% url 'triplan:itinerary_list_search' ''%}">
+        <div class="form-group">
+          <input id="search_input" type="text" class="form-control" placeholder="Where are you going?">
+        </div>
+        <button class="btn btn-outline-secondary" type="submit">Search!</button>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{#<nav class="navbar navbar-inverse navbar-fixed-top">#}
+{#  <div class="container">#}
+{#      <div class="navbar-header"></div>#}
+{#    <li role="presentation" class="active"><a href="{% url 'triplan:itinerary_list' %}">Home</a></li>#}
+{#    <li role="presentation"><a href="#">Profile</a></li>#}
+{#    <li role="presentation"><a href="#">Messages</a></li>#}
+{#    <li class="pull-right"><h6>Hello world, {{ request.user }}</h6></li>#}
+{#  </div>#}
+{#</nav>#}
+{#<ul class="nav nav-tabs">#}
+{#    <li role="presentation" class="active"><a href="{% url 'triplan:itinerary_list' %}">Home</a></li>#}
+{#    <li role="presentation"><a href="#">Profile</a></li>#}
+{#    <li role="presentation"><a href="#">Messages</a></li>#}
+{#    <li class="pull-right"><h6>Hello world, {{ request.user }}</h6></li>#}
+{##}
+{#</ul>#}
     {% block body %}
     {% endblock body %}
 </body>

@@ -18,7 +18,6 @@ class Itinerary(models.Model):
     owner = models.ForeignKey(Profile, related_name='owner', on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
     preview_photo = models.ImageField(blank=True)
-    start_date = models.DateField(blank=True, default=date.today())
     shared_users = models.ManyToManyField(Profile, related_name='shared_users', blank=True)
     public_view = models.BooleanField(default=True)
     favourited_by = models.ManyToManyField(Profile, related_name='fav_by', blank=True)
@@ -127,3 +126,14 @@ class ItinerarySegment(models.Model):
     @property
     def category_icon_class(self):
         return CategoryUtil.get_icon_class(self.category)
+
+
+class Review(models.Model):
+    itinerary = models.ForeignKey(Itinerary)
+    reviewer = models.ForeignKey(Profile)
+    rating = models.PositiveIntegerField()
+    comment = models.CharField(max_length=200)
+    reviewed_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-reviewed_at']

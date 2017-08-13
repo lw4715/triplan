@@ -1,7 +1,6 @@
 .img {
     border-radius: 5px;
-    width: 100%;
-    height: 225px;
+    /*height: 225px;*/
 }
 
 .padding-0 {
@@ -42,6 +41,31 @@
     position: absolute;
     top: 0;
     left: calc((100% - 600px)/2);
+}
+
+.checkbox-custom input {
+    display: none;
+}
+
+.checkbox-custom .fa {
+  text-align: center;
+  display: inline-block;
+}
+
+.checkbox-custom .boolean-false {
+  visibility: visible;
+}
+
+.checkbox-custom .boolean-true {
+  visibility: hidden;
+}
+
+.checkbox-custom input:checked + .boolean-true {
+  visibility: visible;
+}
+
+.checkbox-custom input:checked + .boolean-false {
+  visibility: hidden;
 }
 
 .total-cost {
@@ -100,6 +124,11 @@
     height: 250px !important;
 }
 
+.itinerary-preview .img {
+    width: 100% !important;
+    height: 225px !important;
+}
+
 .itinerary-desc {
     position: absolute;
     top: 100px;
@@ -123,9 +152,10 @@
 
 /* calendar */
 .calendar {
-    margin-top: 20px;
-    border-radius: 10px;
-    border: #cbcbcb solid 2px;
     padding: 20px;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    margin-top: 20px;
+    border-radius: 5px;
 }
 
