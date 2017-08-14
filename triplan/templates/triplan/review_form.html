@@ -1,0 +1,9 @@
+{% extends "triplan/base.html" %}
+
+{% block body %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3>Add review for {{ itinerary.title }}:</h3>
+        {% url 'triplan:itinerary_detail' itinerary.id as url %}
+        {% include 'triplan/edit_form.html' with back_url=url %}
+    </div>
+{% endblock body %}

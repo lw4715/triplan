@@ -69,10 +69,6 @@ class ItineraryListByLocationView(View):
 
 
 class ItineraryListByLocation(generic.ListView):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.parsed_search_str = urllib.parse.unquote(self.kwargs['search_str'])
-
     def get_context_data(self, **kwargs):
         context = super(ItineraryListByLocation, self).get_context_data(**kwargs)
         context['category'] = 'All'
@@ -166,7 +162,7 @@ class Favourite(SingleObjectMixin, FormView):
 
 class ItineraryCreate(generic.edit.CreateView):
     model = Itinerary
-    fields = ['public_view', 'shared_users', 'title', 'preview_photo', 'start_date']
+    fields = ['public_view', 'public_view', 'shared_users', 'title', 'preview_photo']
     success_url = reverse_lazy('triplan:itinerary_list')
 
     def form_valid(self, form):
@@ -208,9 +204,14 @@ class ItinerarySegmentCreate(generic.edit.CreateView):
 class ItineraryEdit(generic.edit.UpdateView):
     template_name = "triplan/itinerary_edit.html"
     model = Itinerary
-    fields = ['title', 'preview_photo', 'start_date']
+    fields = ['title', 'public_view', 'shared_users', 'preview_photo']
     success_url = reverse_lazy('triplan:itinerary_list')
 
+    def get_form(self):
+        form = super(ItineraryEdit, self).get_form()
+        form.fields['shared_users'].queryset = Profile.objects.exclude(
+            user=self.request.user)
+        return form
 
 class ItinerarySegmentEdit(generic.edit.UpdateView):
     template_name = 'triplan/itinerarysegment_edit.html'

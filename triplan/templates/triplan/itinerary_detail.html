@@ -1,28 +1,12 @@
 {% extends "triplan/base.html" %}
 
 {% block imports %}
-    <script>
-    $(document).ready(function() {
-        $("#map-zoom").click(function () {
-            $("#default-map").toggleClass("hide");
-            $("#zoomed-map").toggleClass("hide");
-            console.log("zooming");
-        });
+    {% load static %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{% static 'shared_users_select2.js'%}"></script>
 
-        $("#fav").on('click', function () {
-            console.log("CLICKED!");
-            $.ajax({
-                url: 'fav/',
-                data: {itinerary_id: $(this).attr('data-itinerary-id')},
-                type: 'POST',
-                csrfmiddlewaretoken: "{{ csrf_token }}"
-            }).done(function () {
-                alert("YAY");
-            });
-        });
-    });
-
-    </script>
+    <script src="{% static 'itinerary_detail.js' %}"></script>
 {% endblock imports %}
 
 {% block body %}
